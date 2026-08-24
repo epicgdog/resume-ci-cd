@@ -1,0 +1,232 @@
+@import url("https://fonts.googleapis.com/css2?family=Tinos:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #eef0f3;
+  color: #1a1a1a;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: #1f2430;
+  color: white;
+}
+
+.topbar h1 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.topbar div{
+  display: flex;
+  gap: 20px;
+}
+
+.export-btn {
+  background: #3d7eff;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  background: #2f66d9;
+}
+
+.export-btn:disabled {
+  background: #6d7891;
+  cursor: not-allowed;
+}
+
+.layout {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.editor {
+  flex-shrink: 0;
+  display: flex;
+  background: #1e1e1e;
+}
+
+.resizer {
+  width: 6px;
+  flex-shrink: 0;
+  cursor: col-resize;
+  background: #d7dbe2;
+}
+
+.resizer:hover,
+.resizer:active {
+  background: #3d7eff;
+}
+
+.md-editor {
+  flex: 1;
+  overflow: hidden;
+}
+
+.md-editor .cm-editor {
+  height: 100%;
+  font-family: "SF Mono", Menlo, Consolas, "Courier New", monospace;
+  font-size: 13px;
+}
+
+.md-editor .cm-scroller {
+  line-height: 1.6;
+}
+
+.preview-pane {
+  flex: 1;
+  overflow: hidden;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #b9c0cc;
+}
+
+.page-frame {
+  position: relative;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+.preview-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8.5in;
+  min-height: 11in;
+  transform-origin: top left;
+  background: white;
+  padding: 0.4in;
+  font-family: Tinos, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", sans-serif;
+  font-size: 11pt;
+  font-weight: 500;
+}
+
+.preview-page h1,
+.preview-page h2,
+.preview-page h3,
+.preview-page h4,
+.preview-page p,
+.preview-page a,
+.preview-page li {
+  color: black;
+}
+
+.preview-page h1 {
+  text-align: center;
+  font-size: 26pt;
+  margin: 0;
+  padding: 0;
+}
+
+.preview-page h2 {
+  border-bottom: 1px solid #000;
+  text-transform: uppercase;
+  font-size: 11pt;
+  font-weight: normal;
+  padding: 0;
+  margin-bottom: 5pt;
+  margin-top: 12pt;
+}
+
+.preview-page h2::first-letter {
+  font-size: 14pt;
+}
+
+.preview-page h3 {
+  display: flex;
+  font-size: 11pt;
+  padding: 0;
+  margin: 0;
+  justify-content: space-between;
+}
+
+.preview-page h4 {
+  display: flex;
+  font-size: 11pt;
+  font-weight: normal;
+  font-style: italic;
+  padding: 0;
+  margin: 0;
+  justify-content: space-between;
+}
+
+.preview-page .normal {
+  font-weight: normal;
+}
+
+.preview-page .tech-stack {
+  font-style: normal;
+}
+
+.preview-page p {
+  margin: 0;
+  padding: 0;
+}
+
+.preview-page a {
+  color: black;
+  text-underline-offset: 4px;
+}
+
+.preview-page ul {
+  margin: 1pt 0;
+  padding-left: 14px;
+  font-size: 11pt;
+}
+
+.preview-page ul > li {
+  margin-bottom: 1pt;
+}
+
+.preview-page ul > li:last-child {
+  margin-bottom: 5pt;
+}
+
+.preview-page .headerInfo > ul {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto 0;
+  margin-top: -1pt;
+  padding: 0;
+}
+
+.preview-page .headerInfo > ul > li {
+  display: inline;
+  white-space: pre;
+  list-style-type: none;
+  font-size: 11pt;
+}
+
+.preview-page .headerInfo > ul > li:not(:last-child) {
+  margin-right: 8px;
+}
+
+.preview-page .headerInfo > ul > li:not(:last-child)::after {
+  content: "|";
+  margin-left: 4px;
+}
