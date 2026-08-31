@@ -75,6 +75,8 @@ and change @REDACTED to be true
 
 ## Technical Skills
 
-**Languages/Frameworks**: Java, Python, TypeScript, JavaScript, SQL, React, Node.js
+**Languages**: Java, Python, TypeScript, JavaScript, SQL
+
+**Frameworks**: React, Node.js
 
 **Technologies**: PostgreSQL, Docker, Git, GitHub Actions
