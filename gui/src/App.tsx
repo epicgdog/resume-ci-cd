@@ -2,43 +2,9 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { markdown as markdownLang } from "@codemirror/lang-markdown";
 import { oneDark } from "@codemirror/theme-one-dark";
-import { marked } from "marked";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-
-marked.setOptions({ breaks: false });
-
-function renderResumeMarkdown(raw: string): string {
-  let text = raw.replace(/<!--[\s\S]*?-->/g, "");
-
-  const vars: Record<string, string> = {};
-  let redacted = false;
-  const remaining: string[] = [];
-
-  for (const line of text.split("\n")) {
-    const match = line.match(/^@([A-Z_]+)=(.*)$/);
-    if (!match) {
-      remaining.push(line);
-      continue;
-    }
-    const [, key, value] = match;
-    if (key === "REDACTED") {
-      redacted = value.trim().toLowerCase() === "true";
-    } else {
-      const [real, fake] = value.split("||");
-      vars[key] = (redacted && fake !== undefined ? fake : real).trim();
-    }
-  }
-  text = remaining.join("\n");
-  text = text.replace(/\{([A-Z_]+)\}/g, (_, key) => vars[key] ?? "");
-
-  text = text.replace(
-    /<div class="section headerInfo">([\s\S]*?)<\/div>/,
-    (_, inner) => `<div class="section headerInfo">${marked.parse(inner.trim()) as string}</div>`,
-  );
-
-  return marked.parse(text) as string;
-}
+import { renderResumeMarkdown } from "./utils";
 
 const PANE_PADDING = 32;
 
@@ -51,6 +17,7 @@ export default function App() {
   const draggingRef = useRef(false);
   const [frame, setFrame] = useState({ width: 0, height: 0, scale: 1 });
   const [editorWidth, setEditorWidth] = useState(520);
+  const [] = useState(70);
 
   const html = useMemo(() => renderResumeMarkdown(markdown), [markdown]);
 
@@ -147,18 +114,11 @@ export default function App() {
     }
   };
 
-  const exportToPortfolio = async () => {
-    // to be implemented by hand
-  }
-
   return (
     <div className="app">
       <header className="topbar">
         <h1>Resume Builder</h1>
         <div>
-        <button className="export-btn" onClick={exportToPortfolio}>
-          Export to Portfolio
-        </button>
         <button className="export-btn" onClick={exportPdf} disabled={exporting}>
           {exporting ? "Exporting…" : "Export to PDF"}
         </button>
