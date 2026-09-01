@@ -2,8 +2,6 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { markdown as markdownLang } from "@codemirror/lang-markdown";
 import { oneDark } from "@codemirror/theme-one-dark";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import { mdToResume, renderResumeMarkdown } from "./utils";
 
 const PANE_PADDING = 32;
@@ -12,7 +10,6 @@ const PORTFOLIO_TOKEN = import.meta.env.VITE_PORTFOLIO_TOKEN;
 
 export default function App() {
   const [markdown, setMarkdown] = useState("");
-  const [exporting, setExporting] = useState(false);
   const [exportingPortfolio, setExportingPortfolio] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const paneRef = useRef<HTMLDivElement>(null);
@@ -107,39 +104,8 @@ export default function App() {
     return () => ro.disconnect();
   }, [html]);
 
-  const exportPdf = async () => {
-    const node = previewRef.current;
-    if (!node) return;
-    setExporting(true);
-    const prevTransform = node.style.transform;
-    node.style.transform = "none";
-    try {
-      const canvas = await html2canvas(node, { scale: 2, useCORS: true });
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({ unit: "pt", format: "a4" });
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      pdf.save("resume.pdf");
-    } finally {
-      node.style.transform = prevTransform;
-      setExporting(false);
-    }
+  const exportPdf = () => {
+    window.print();
   };
 
   const exportToPortfolio = async () => {
@@ -170,8 +136,8 @@ export default function App() {
         <button className="export-btn" onClick={exportToPortfolio} disabled={exportingPortfolio}>
           {exportingPortfolio ? "Exporting…" : "Export to Portfolio"}
         </button>
-        <button className="export-btn" onClick={exportPdf} disabled={exporting}>
-          {exporting ? "Exporting…" : "Export to PDF"}
+        <button className="export-btn" onClick={exportPdf}>
+          Export to PDF
         </button>
         </div>
       

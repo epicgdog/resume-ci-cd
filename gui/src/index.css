@@ -230,3 +230,33 @@ body {
   content: "|";
   margin-left: 4px;
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .preview-page,
+  .preview-page * {
+    visibility: visible;
+  }
+
+  .page-frame {
+    position: static;
+    box-shadow: none;
+  }
+
+  .preview-page {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    min-height: auto;
+    box-shadow: none;
+  }
+
+  @page {
+    size: letter;
+    margin: 0;
+  }
+}
