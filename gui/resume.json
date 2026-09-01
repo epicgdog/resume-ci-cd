@@ -1,0 +1,91 @@
+{
+  "name": "Jane Doe",
+  "contact": {
+    "email": "jane.doe@email.com",
+    "phone": "555-123-4567",
+    "portfolio": "janedoe.dev",
+    "linkedin": "jane-doe",
+    "github": "janedoe"
+  },
+  "education": [
+    {
+      "name": "State University",
+      "degree": "B.S. Computer Science",
+      "gpa": 3.8,
+      "end_date": "May 2027"
+    }
+  ],
+  "experience": [
+    {
+      "title": "Software Engineer Intern",
+      "company": "Example Corp",
+      "location": "Remote",
+      "start_date": "May 2026",
+      "end_date": "Present",
+      "bullets": [
+        "Built a feature that improved processing throughput by 20% for a high-traffic internal service.",
+        "Collaborated with a team of 5 engineers to ship a new public API used by 3 downstream teams.",
+        "Wrote integration tests that reduced regression bugs reaching production by half."
+      ]
+    },
+    {
+      "title": "Teaching Assistant",
+      "company": "State University",
+      "location": "Anytown, ST",
+      "start_date": "Aug. 2025",
+      "end_date": "May 2026",
+      "bullets": [
+        "Held weekly office hours for 40+ students in an introductory data structures course.",
+        "Graded assignments and exams, providing detailed feedback on algorithmic complexity."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Resume Builder",
+      "link": "https://github.com/janedoe/resume-builder",
+      "stack": "React, TypeScript, Vite",
+      "bullets": [
+        "Built a live-updating resume editor with a markdown source panel and styled preview.",
+        "Added one-click PDF export using html2canvas and jsPDF."
+      ]
+    },
+    {
+      "name": "Task Tracker",
+      "link": "https://github.com/janedoe/task-tracker",
+      "stack": "Python, FastAPI, PostgreSQL",
+      "bullets": [
+        "Designed a REST API for a small team task tracker with role-based access control.",
+        "Deployed via CI/CD pipeline with automated tests on every pull request."
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "type": "Languages",
+      "items": [
+        "Java",
+        "Python",
+        "TypeScript",
+        "JavaScript",
+        "SQL"
+      ]
+    },
+    {
+      "type": "Frameworks",
+      "items": [
+        "React",
+        "Node.js"
+      ]
+    },
+    {
+      "type": "Technologies",
+      "items": [
+        "PostgreSQL",
+        "Docker",
+        "Git",
+        "GitHub Actions"
+      ]
+    }
+  ]
+}
