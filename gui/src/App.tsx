@@ -31,6 +31,31 @@ export default function App() {
       .catch(() => setMarkdown("# Failed to load template.md"));
   }, []);
 
+  const markdownRef = useRef(markdown);
+  useEffect(() => {
+    markdownRef.current = markdown;
+  }, [markdown]);
+
+  useEffect(() => {
+    const lastSaved = { current: null as string | null };
+    const interval = setInterval(() => {
+      const current = markdownRef.current;
+      if (current === lastSaved.current) return;
+      try {
+        const resume = mdToResume(current);
+        fetch("/api/save-resume", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(resume, null, 2),
+        }).catch(() => {});
+        lastSaved.current = current;
+      } catch {
+        // markdown is mid-edit and doesn't match the template shape yet; retry next tick
+      }
+    }, 300);
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
       if (!draggingRef.current || !layoutRef.current) return;
