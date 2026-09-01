@@ -1,0 +1,10 @@
+services:
+  resume-gui:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - resume-data:/data
+
+volumes:
+  resume-data:
