@@ -4,13 +4,16 @@ import { markdown as markdownLang } from "@codemirror/lang-markdown";
 import { oneDark } from "@codemirror/theme-one-dark";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { renderResumeMarkdown } from "./utils";
+import { mdToResume, renderResumeMarkdown } from "./utils";
 
 const PANE_PADDING = 32;
+const PORTFOLIO_URL = "https://gerardconsuelo.com/latest-json";
+const PORTFOLIO_TOKEN = import.meta.env.VITE_PORTFOLIO_TOKEN;
 
 export default function App() {
   const [markdown, setMarkdown] = useState("");
   const [exporting, setExporting] = useState(false);
+  const [exportingPortfolio, setExportingPortfolio] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const paneRef = useRef<HTMLDivElement>(null);
   const layoutRef = useRef<HTMLDivElement>(null);
@@ -114,11 +117,34 @@ export default function App() {
     }
   };
 
+  const exportToPortfolio = async () => {
+    setExportingPortfolio(true);
+    try {
+      const resume = mdToResume(markdown);
+      const res = await fetch(PORTFOLIO_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${PORTFOLIO_TOKEN}`,
+        },
+        body: JSON.stringify(resume),
+      });
+      if (!res.ok) {
+        console.error("Export to portfolio failed: " + res.statusText);
+      }
+    } finally {
+      setExportingPortfolio(false);
+    }
+  };
+
   return (
     <div className="app">
       <header className="topbar">
         <h1>Resume Builder</h1>
         <div>
+        <button className="export-btn" onClick={exportToPortfolio} disabled={exportingPortfolio}>
+          {exportingPortfolio ? "Exporting…" : "Export to Portfolio"}
+        </button>
         <button className="export-btn" onClick={exportPdf} disabled={exporting}>
           {exporting ? "Exporting…" : "Export to PDF"}
         </button>
