@@ -8,10 +8,9 @@ function saveResumeJson(): Plugin {
   return {
     name: "save-resume-json",
     configureServer(server) {
-      server.middlewares.use("/api/save-resume", (req, res) => {
-        if (req.method !== "POST") {
-          res.statusCode = 405;
-          res.end();
+      server.middlewares.use("/resume.json", (req, res, next) => {
+        if (req.method !== "PUT") {
+          next();
           return;
         }
         let body = "";

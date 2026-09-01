@@ -40,8 +40,8 @@ export default function App() {
       if (current === lastSaved.current) return;
       try {
         const resume = mdToResume(current);
-        fetch("/api/save-resume", {
-          method: "POST",
+        fetch("/resume.json", {
+          method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(resume, null, 2),
         }).catch(() => {});
@@ -123,6 +123,8 @@ export default function App() {
       if (!res.ok) {
         console.error("Export to portfolio failed: " + res.statusText);
       }
+    } catch (err) {
+      console.error("Export to portfolio failed:", err);
     } finally {
       setExportingPortfolio(false);
     }

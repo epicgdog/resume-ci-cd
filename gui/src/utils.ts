@@ -101,8 +101,9 @@ export function mdToJson(raw: string): ResumeSection[] {
 }
 
 function extractRealVars(raw: string): Record<string, string> {
+  const text = raw.replace(/<!--[\s\S]*?-->/g, "");
   const vars: Record<string, string> = {};
-  for (const line of raw.split("\n")) {
+  for (const line of text.split("\n")) {
     const match = line.match(/^@([A-Z_]+)=(.*)$/);
     if (!match) continue;
     const [, key, value] = match;
