@@ -1,6 +1,9 @@
 services:
   resume-gui:
     build: .
+    environment:
+      - VIEWER_PASSWORD=${VIEWER_PASSWORD}
+      - EDITOR_PASSWORD=${EDITOR_PASSWORD}
     ports:
       - "8080:80"
     volumes:
