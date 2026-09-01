@@ -1,5 +1,7 @@
 node_modules
 dist
+resume.json
+resume.md
 
 # Output
 .output

@@ -22,8 +22,9 @@ export default function App() {
   const html = useMemo(() => renderResumeMarkdown(markdown), [markdown]);
 
   useEffect(() => {
-    fetch("/template.md")
-      .then((res) => res.text())
+    fetch("/resume.md")
+      .then((res) => (res.ok ? res.text() : Promise.reject()))
+      .catch(() => fetch("/template.md").then((res) => res.text()))
       .then(setMarkdown)
       .catch(() => setMarkdown("# Failed to load template.md"));
   }, []);
@@ -38,17 +39,12 @@ export default function App() {
     const interval = setInterval(() => {
       const current = markdownRef.current;
       if (current === lastSaved.current) return;
-      try {
-        const resume = mdToResume(current);
-        fetch("/resume.json", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(resume, null, 2),
-        }).catch(() => {});
-        lastSaved.current = current;
-      } catch {
-        // markdown is mid-edit and doesn't match the template shape yet; retry next tick
-      }
+      fetch("/resume.md", {
+        method: "PUT",
+        headers: { "Content-Type": "text/markdown" },
+        body: current,
+      }).catch(() => {});
+      lastSaved.current = current;
     }, 300);
     return () => clearInterval(interval);
   }, []);

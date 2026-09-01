@@ -2,7 +2,7 @@
 set -e
 
 mkdir -p /data
-if [ ! -f /data/resume.json ]; then
-    cp /app/resume.default.json /data/resume.json
+if [ ! -f /data/resume.md ]; then
+    cp /app/resume.md.default /data/resume.md
 fi
 chown -R nginx:nginx /data
