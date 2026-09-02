@@ -1,6 +1,7 @@
 services:
   resume-gui:
     build: .
+    container_name: resume-editor
     environment:
       - VIEWER_PASSWORD=${VIEWER_PASSWORD}
       - EDITOR_PASSWORD=${EDITOR_PASSWORD}
