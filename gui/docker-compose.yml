@@ -10,5 +10,13 @@ services:
     volumes:
       - resume-data:/data
 
+    networks:
+      - default
+      - npm_default
+
+networks:
+  npm_default:
+    external: true
+
 volumes:
   resume-data:
